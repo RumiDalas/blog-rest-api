@@ -20,7 +20,23 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails , HttpStatus.NOT_FOUND);
 
     };
+
+    @ExceptionHandler(BlogAPIException.class)
+    public ResponseEntity<ErrorDetails> handleBlogAPIException(BlogAPIException exception ,WebRequest webRequest){
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
+                webRequest.getDescription(false));
+        return new ResponseEntity<>(errorDetails , HttpStatus.NOT_FOUND);
+
+    };
 //    global exception
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDetails> handleGlobalException(Exception exception ,WebRequest webRequest){
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
+                webRequest.getDescription(false));
+        return new ResponseEntity<>(errorDetails , HttpStatus.INTERNAL_SERVER_ERROR);
+
+    };
 
 
 }
